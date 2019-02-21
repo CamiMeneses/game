@@ -1,0 +1,20 @@
+<center>
+    <div class="texto">
+        <% if @frame.length>0 %>   
+            <%=@frame.last.roll_1%><br>
+            <%=@frame.last.roll_2%><br>
+            score  <%=@frame.last.score%><br>
+            <%=@frame.last.move%><br>
+            <%=@frame.last.total%>
+            
+
+        <%end%>
+
+        <% if @frame.length<11 %>
+            <%= link_to('Lanzar', line_frames_path(@line),method: :post)%>
+        <% else%>
+            <%= link_to('Jugar otra vez', "/")%>
+        <%end%>
+    </div>
+</center>
+
