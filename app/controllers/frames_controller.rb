@@ -37,16 +37,22 @@ class FramesController < ApplicationController
     end
 
     def move
+        p @arr
         if @arr[0]==10
             "STRIKE"
         elsif (@arr[0]+@arr[1])==10
             "SPARE"
-        else
-            s=["¡SERÁ LA PRÓXIMA!","¡BUEN TIRO!","¡CASI PERFECTO!","¡UPS!"]
-            inx=rand(4)
+        elsif ((@arr[0]+@arr[1])<=9 && (@arr[0]+@arr[1])>6)
+            s=["¡SERÁ LA PRÓXIMA!","¡BUEN TIRO!","¡CASI PERFECTO!"]
+            inx=rand(3)
+            s[inx]
+        else  
+            s=["¡UPS!","QUÉ PASA?"]
+            inx=rand(2)
             s[inx]
         end
      end
+
 
     private
     def frame_params

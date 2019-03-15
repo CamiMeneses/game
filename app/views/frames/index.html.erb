@@ -1,20 +1,135 @@
+<script>
+
+  var pines=[]
+  function pegar(ball, pin){
+    
+  var ball = $(ball);
+  var pin = $(pin);    
+    
+  var ball_x = ball.offset().left; //Posición horizontal de la bola
+  var ball_y = ball.offset().top; //Posición vertical de la bola
+  var ball_w = ball.width(); //Ancho de la bola    
+  var ball_h = ball.height(); //Altura de la bola
+   
+  var pin_x = pin.offset().left;//Posición horizontal del pin
+  var pin_y = pin.offset().top;//Posición vertical del pin
+  var pin_w = pin.width(); //Ancho del pin
+    
+  var pin_h = pin.height(); //Altura del pin
+    
+  if( ball_y+ball_h < pin_y ||
+      ball_y > pin_y+pin_h ||
+      ball_x > pin_x+pin_w ||
+      ball_x+ball_w < pin_x ){       
+
+      return false;
+  }else{
+    // $(pin).css({backgroundColor:'yellow'});
+      pin=pin.attr("id") 
+      pines.push(pin)
+      pines=[...new Set(pines)] 
+      console.log(pines)
+      return true;   
+  }    
+}
+
+function score(scor){
+  roll=[1,2,3,4,5]
+  roll2=[7]
+  /*score_1=roll.length
+  score_2=roll2.length
+  if score_1<10{
+    move="spare"
+  }elsif score_1<10{
+  }*/
+  console.log("score"+scor)
+}
+
+
+$(document).mousemove(function(e) {
+  $('#ball').css({
+    top: e.pageY,
+    left: e.pageX
+  });  
+
+  $('.pin').each(function(){    
+    pegar('#ball',$(this))
+  });  
+  var hide_pin="";
+  for ( var i = 0, l = pines.length; i < l; i++ ) {
+    hide_pin=pines[ i ]
+    $('#'+hide_pin).hide();      
+  }
+}); 
+
+
+/*$(document).ready(function() {
+  var bola = $("#ball");
+  var hide_pin="";
+    
+  $(bola).click(function(e) { 
+    bola.animate({
+      "left": 300,
+      "top": 200
+      })  
+
+    $('.pin').each(function(){    
+      pegar('#ball',$(this))
+    });
+
+    console.log(pines)
+    score(pines)
+
+    for ( var i = 0, l = pines.length; i < l; i++ ) {
+      hide_pin=pines[ i ]
+      $('#'+hide_pin).hide();      
+    }     
+
+    });
+});*/
+
+
+
+
+</script>
+
 <center>
-    <div class="texto">
-        <% if @frame.length>0 %>   
-            <%=@frame.last.roll_1%><br>
-            <%=@frame.last.roll_2%><br>
-            score  <%=@frame.last.score%><br>
-            <%=@frame.last.move%><br>
-            <%=@frame.last.total%>
-            
-
-        <%end%>
-
-        <% if @frame.length<11 %>
-            <%= link_to('Lanzar', line_frames_path(@line),method: :post)%>
-        <% else%>
-            <%= link_to('Jugar otra vez', "/")%>
-        <%end%>
+<div id="lanzar" class="texto">  
+ 
+  <div id="simul">
+    <div id="ball"></div>
+    <div id="grupo">
+      <div id="pin_10" class="pin">10</div>
+      <div id="pin_9" class="pin">9</div>
+      <div id="pin_8" class="pin">8</div>
+      <div id="pin_7" class="pin">7</div>
+      <div id="pin_6" class="pin">6</div>
+      <div id="pin_5" class="pin">5</div>
+      <div id="pin_4" class="pin">4</div>
+      <div id="pin_3" class="pin">3</div>
+      <div id="pin_2" class="pin">2</div>
+      <div id="pin_1" class="pin">1</div>
     </div>
+
+  </div>
+
+                  
+  <% if @frame.length<11 %>        
+
+    <%=link_to image_tag('http://www.i2clipart.com/cliparts/7/9/e/1/clipart-bola-de-vidro-glass-ball-256x256-79e1.png',class: 'ball'),line_frames_path(@line), method: :post %>
+
+  <% else%>
+    <%= link_to('Jugar otra vez', "/")%>
+  <%end%>
+  
+  <div id="info">      
+    <% if @frame.length>0 %>   
+    <%=@frame.last.roll_1%> <%=@frame.last.roll_2%><br>
+    score  <%=@frame.last.score%><br>
+    <div id="move"><%=@frame.last.move%><br></div>
+    <%=@frame.last.total%>   
+    <%end%>
+  </div>
+</div>
 </center>
 

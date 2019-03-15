@@ -1,12 +1,10 @@
-<div class="texto">
+<div class="texto" id="nuevo">
     <div id="form">
     <%= form_for @line do |f| %>
         <br>
-        <p>¿Cual es tu nombre?:</p>
-        <%= f.text_field :name %><br><br>
-       
+        <p>¿Cuál es tu nombre?:</p>
+        <%= f.text_field :name %><br><br>       
         <%= f.submit 'Juguemos'%>        
     <%end%>
     </div>
-
 </div>
