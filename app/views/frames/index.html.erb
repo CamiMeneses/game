@@ -1,52 +1,132 @@
 <script>
-
   var pines=[]
   function pegar(ball, pin){
-    
-  var ball = $(ball);
-  var pin = $(pin);    
-    
-  var ball_x = ball.offset().left; //Posición horizontal de la bola
-  var ball_y = ball.offset().top; //Posición vertical de la bola
-  var ball_w = ball.width(); //Ancho de la bola    
-  var ball_h = ball.height(); //Altura de la bola
+
+    var ball = $(ball);
+    var pin = $(pin);    
+      
+    var ball_x = ball.offset().left; //Posición horizontal de la bola
+    var ball_y = ball.offset().top; //Posición vertical de la bola
+    var ball_w = ball.width(); //Ancho de la bola    
+    var ball_h = ball.height(); //Altura de la bola
    
-  var pin_x = pin.offset().left;//Posición horizontal del pin
-  var pin_y = pin.offset().top;//Posición vertical del pin
-  var pin_w = pin.width(); //Ancho del pin
-    
-  var pin_h = pin.height(); //Altura del pin
-    
-  if( ball_y+ball_h < pin_y ||
-      ball_y > pin_y+pin_h ||
-      ball_x > pin_x+pin_w ||
-      ball_x+ball_w < pin_x ){       
+    var pin_x = pin.offset().left;//Posición horizontal del pin
+    var pin_y = pin.offset().top;//Posición vertical del pin
+    var pin_w = pin.width(); //Ancho del pin
+    var pin_h = pin.height(); //Altura del pin
 
-      return false;
-  }else{
-    // $(pin).css({backgroundColor:'yellow'});
-      pin=pin.attr("id") 
-      pines.push(pin)
-      pines=[...new Set(pines)] 
-      console.log(pines)
-      return true;   
-  }    
+    if( ball_y+ball_h < pin_y ||
+        ball_y > pin_y+pin_h ||
+        ball_x > pin_x+pin_w ||
+        ball_x+ball_w < pin_x ){  
+         
+        return false;
+    }else{
+      // $(pin).css({backgroundColor:'yellow'});
+        pin=pin.attr("id") 
+        pines.push(pin)
+        pines=[...new Set(pines)]   
+        return true;   
+    }    
 }
 
-function score(scor){
-  roll=[1,2,3,4,5]
-  roll2=[7]
-  /*score_1=roll.length
-  score_2=roll2.length
-  if score_1<10{
-    move="spare"
-  }elsif score_1<10{
-  }*/
-  console.log("score"+scor)
+num=0
+move=""
+frame=[]
+line=[]
+long=0
+sum=0
+
+function score(roll,move,long){
+  if (move == "STRIKE"){ 
+    sum=frame[0] 
+    console.log("sum: " + sum)
+    console.log(move)
+  }else if ((move=="SPARE")|| (move="NONE")) {
+    sum=frame[0]+frame[1]
+    console.log("sum: " + sum)
+    console.log(move)
+  } else if (long<2)
+    lanzamiento() 
+  else{
+    console.log("nada")
+    }
+}
+
+function roll(array_pines){  
+  long=frame.length     // scores del frame
+  if (long==0){    //hacer mi primer lanzamiento 
+    roll=array_pines;
+    frame.push(roll)
+    if (roll==10) {move="STRIKE" }     //primer lanzamiento perfecto
+    console.log("primer: " +frame)    
+    score(roll,move,long)
+  }
+
+  else{ 
+    num=10-frame[0]
+    roll=Math.floor(Math.random()*num);
+    frame.push(roll) 
+    if ((frame[0]+frame[1])==10) {move="SPARE" }   
+    if ((frame[0]+frame[1])<10) {move="NONE"}
+    console.log("segundo: " +frame)
+    score(roll,move,long)
+  } 
 }
 
 
-$(document).mousemove(function(e) {
+
+array_pines=[]
+arr=[]
+function updateLane() {
+  for ( var i = 0, l = pines.length; i < l; i++ ) {
+    hide_pin=pines[ i ]
+    $('#'+hide_pin).hide(); 
+    num_pin=(hide_pin.split("_"))[1]
+    arr.push(num_pin)    
+  } 
+  array_pines=arr
+  roll(array_pines)
+  $moving = false;
+  $("#ball").hide();
+  $("buttom").html("Next");
+
+}
+
+function checkPines(){
+  $('.pin').each(function(){    
+        pegar('#ball',$(this))
+      });
+  if ($moving){
+    setTimeout(checkPines, 100)
+  }
+}
+
+function start(){  
+  console.log("start")  
+  $("#ball").show();      
+}
+
+$(document).ready(function() {
+
+  $("#ball").hide();
+
+  var bola = $("#ball");
+  var hide_pin="";
+  $moving = true;
+  $(bola).click(function(e) { 
+    bola.animate({
+      "left": 350,
+      "top": 150
+    }, 1000)  
+
+    setTimeout(checkPines, 100)
+    setTimeout(updateLane, 1000)
+    });
+});
+
+//---------------------------------------------------------
+/*$(document).mousemove(function(e) {
   $('#ball').css({
     top: e.pageY,
     left: e.pageX
@@ -60,42 +140,12 @@ $(document).mousemove(function(e) {
     hide_pin=pines[ i ]
     $('#'+hide_pin).hide();      
   }
-}); 
-
-
-/*$(document).ready(function() {
-  var bola = $("#ball");
-  var hide_pin="";
-    
-  $(bola).click(function(e) { 
-    bola.animate({
-      "left": 300,
-      "top": 200
-      })  
-
-    $('.pin').each(function(){    
-      pegar('#ball',$(this))
-    });
-
-    console.log(pines)
-    score(pines)
-
-    for ( var i = 0, l = pines.length; i < l; i++ ) {
-      hide_pin=pines[ i ]
-      $('#'+hide_pin).hide();      
-    }     
-
-    });
-});*/
-
-
-
-
+}); */
 </script>
 
 <center>
 <div id="lanzar" class="texto">  
- 
+<button onclick="start()">START</button>
   <div id="simul">
     <div id="ball"></div>
     <div id="grupo">
