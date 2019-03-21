@@ -1,20 +1,41 @@
 <script>
 class Frame{ 
   constructor(){
-    this.pines = [];
+    
     this.firstShoot = [];
     this.secondShoot = [];
     this.thirdShoot = [];
+    this.pines = [];
+    this.my_score = [];
     this.moving=true;
     this.lanzar();
   }
 
-  restart(self){  
-    self.pines=[]
-    
+  resetScreen() {    
+    console.log("hello")
+    $('#pin_1').show(); 
+    $('#pin_2').show(); 
+    $('#pin_3').show(); 
+    $('#pin_4').show(); 
+    $('#pin_5').show(); 
+    $('#pin_6').show(); 
+    $('#pin_7').show(); 
+    $('#pin_8').show(); 
+    $('#pin_9').show(); 
+    $('#pin_10').show();       
     $('#ball').hide().animate({
-      "left": 450,
-      "top": 600
+      "left": 380,
+      "top": 520
+    }, 1000);    
+    $('#ball').show();
+    location.reload();
+  }
+
+  restart(self){  
+    self.pines=[]    
+    $('#ball').hide().animate({
+      "left": 380,
+      "top": 520
     }, 1000); 
     $('#ball').show()
     //setTimeout(() => self.resetScreen(), 2000)  
@@ -25,43 +46,65 @@ class Frame{
    
    if (self.firstShoot.length==0){
       self.firstShoot.push(array_pines.length)    
-      console.log("roll_1:" + self.firstShoot)
-      $("p1").html(self.firstShoot);      
-      console.log(self.pines) 
+      //console.log("roll_1:" + self.firstShoot)
+      $("p1").html(self.firstShoot);        
       if (self.firstShoot==10) {
         self.secondShoot.push(0); 
         self.thirdShoot.push(0); 
         $("p4").html("STRIKE");
-        $("#message").css({backgroundColor:'yellow'}); 
-        Linea.nuevoFrame();
+        $("#message").css({backgroundColor:'yellow'});
+        $("p5").html("<img src=https://3.bp.blogspot.com/-B7nflwwpW20/W5EsHjLIbyI/AAAAAAAAulc/MhPMWWUec8c-595Xolo6UDijoVJq6lF-wCLcBGAs/s1600/AW1718046_21.gif>");
+
+        setTimeout(() => self.resetScreen(), 2500) 
+        $my_line.nuevoFrame();
       } else{
-        $("p4").html("Continua..");
+        $("p4").html("Continua jugando...");
+        $("p5").html("<img src=https://media.giphy.com/media/9B4zcSBmXDr6E/giphy.gif>");
         self.restart(self)}
     }
     else if (self.firstShoot.length==1){
       self.secondShoot.push(array_pines.length)   
-      console.log("roll_2:" + self.secondShoot)  
+      //console.log("roll_2:" + self.secondShoot)  
       self.thirdShoot.push(0);
-      console.log(self.pines)     
+      //console.log(self.pines)     
       $("p2").html(self.secondShoot); 
-        if ((self.firstShoot+self.secondShoot)==10 ){
+      
+      var suma=parseInt(self.firstShoot)+parseInt(self.secondShoot)
+      $("p3").html(suma);
+      //console.log(suma) 
+        if (suma===10 ){
           $("p4").html("SPARE");
-          $("#message").css({backgroundColor:'yellow'});  
+          $("#message").css({backgroundColor:'yellow'}); 
+          $("p5").html("<img src=https://static.wixstatic.com/media/db56f4_55a32cc5d9564085a6a76f595616ae94.gif>");
         }  else{
           $("p4").html("Será la próxima");
           $("#message").css({backgroundColor:'aqua'});  
+          $("p5").html("<img src=https://media.giphy.com/media/qJsEFcugaVvOg/giphy.gif>");
         }
         //self.restart(self) 
-        self.nuevoFrame();        
+        setTimeout(() => self.resetScreen(), 2500) 
+        $my_line.nuevoFrame();            
       }else{
       console.log("nothing")
       }
-
+      
+      self.show_score_frame(self.firstShoot,self.secondShoot,self.thirdShoot,self);
   }
 
-  nuevoFrame(){
-    console.log("prueba")
-  }
+  show_score_frame(firstShoot,secondShoot,thirdShoot,self){    
+    var my_score_frame=[parseInt(firstShoot),parseInt(secondShoot),parseInt(thirdShoot)]
+    
+    console.log(my_score_frame)
+    //var my_score_frame=parseInt(firstShoot)+parseInt(secondShoot)+parseInt(thirdShoot) 
+    //console.log("SCORE "+my_score_frame)
+    //$("p3").html(my_score_frame);
+    if (!my_score_frame.includes(NaN)){
+      self.firstShoot=[]
+      self.secondShoot=[]
+      self.thirdShoot=[]
+    }
+    }
+
 
   lanzar(){
     var bola = $("#ball");    
@@ -88,7 +131,7 @@ class Frame{
      
     console.log("updatelane: " +array_pines)     
     
-    self.rolls(array_pines,self)//funcion para realizar el calculo de pines y score   
+    self.rolls(array_pines,self)//funcion para realizar el calculo de pines y ,y_score   
   }
 
   checkPines(self){    
@@ -127,44 +170,25 @@ class Frame{
         return true; 
     }    
   }
-
-
-  resetScreen() {    
-    console(prueba.pines)
-    $('#pin_1').show(); 
-    $('#pin_2').show(); 
-    $('#pin_3').show(); 
-    $('#pin_4').show(); 
-    $('#pin_5').show(); 
-    $('#pin_6').show(); 
-    $('#pin_7').show(); 
-    $('#pin_8').show(); 
-    $('#pin_9').show(); 
-    $('#pin_10').show(); 
-    $('#ball').show();     
-  }
 }
 //----------------------------------end frame class
 
 class Linea{ 
   constructor(){
     this.score = [];
-    this.primerFrame();
+    this.nuevoFrame();
   }
 
-  primerFrame(){  
-    var prueba = new Frame()    
-    console.log("hola")  
-  }
   nuevoFrame(){
     console.log("nuevo frame")
-    var nuevo = new Frame() 
+
+     var nuevo = new Frame() 
+     this.score.push(nuevo)   
+
+    console.log(nuevo)
   }
+
 }
-
-
-
-
 
 function esconder() {
   $('#pin_1').hide(); 
@@ -178,7 +202,9 @@ function esconder() {
   $('#pin_9').hide(); 
   $('#pin_10').hide(); 
   $('#ball').hide();     
-}
+  }
+
+
 
 </script>
 
@@ -205,12 +231,15 @@ function esconder() {
     <p1> 0<p1> 
     <p>Segundo turno<p>
     <p2> 0<p2> 
-    <p>score<p>
-    <p3> 0<p3> 
-    <div id=message>
-    <p>Message<p>
-    <p4><p4> 
+    <div id=score>
+      <p>score<p>
+      <p3> 0<p3> 
     </div>
+    <div id=message>
+      <p><p>
+      <p4><p4> 
+    </div>
+    <p5><img src=https://media.giphy.com/media/dXUvIsT34PwXK/giphy.gif height="350" width="350"><p5>
     
   </div>
   
@@ -219,7 +248,7 @@ function esconder() {
 </center>
 
 <script>  
-  var my_line = new Linea()  
+  $my_line = new Linea
 </script>
 
 

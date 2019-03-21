@@ -1,4 +1,4 @@
-$fondo: linear-gradient(to right, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+
 $pin-size: 36px;
 $simul_width: 900px;
 *{  margin: 0;
@@ -26,7 +26,7 @@ $simul_width: 900px;
     }
 }
 #simul{
-    background-image:url(http://img3.wikia.nocookie.net/__cb20100815225230/clubpenguin/images/5/5f/Bowling_Alley.PNG);
+    background-image:url(http://pluspng.com/img-png/bowling-lane-png-bowling-alley-png-2300.png);
     background-repeat: no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -54,14 +54,12 @@ $simul_width: 900px;
     text-shadow: #FFF 0px 0px 5px, #FFF 0px 0px 8px, #FFF 0px 0px 8px, #C219FF 0px 10px 20px, #FF2D95 0px 0px 30px, #FF2D95 0px 0px 40px, #FF2D95 0px 0px 50px, #FF2D95 0px 0px 75px;    
 }
 body{
-    background: $fondo;
-    #welcome, #nuevo{
-        background-image: url(http://www.fondox.net/wallpapers/los-bolos-769.jpg);
-    }    
-    -webkit-background-size: cover;
+    background-image: url(https://steamuserimages-a.akamaihd.net/ugc/969850047444762616/07C5E6BE9FDA9038D4AB2A03A8796274D425B69D/);
+   -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;  
+    background-size: cover; 
+    background-size: 100%;      
 }
 
 input{    
@@ -69,17 +67,17 @@ input{
     font-size:20px;
 }
 .ball{
-    width: 200px;
-    height: 200px;  
-    margin-bottom: 0;      
+    width: 170px;
+    height: 170px;         
 }
 
 #ball {
     background: none;
     border: none;      
     position: absolute;
-    top:600px;
-    left:$simul_width/2;
+    top:520px;
+    left:380px;
+    
   }
   #grupo{
       position: relative;
@@ -114,15 +112,26 @@ input{
       background-color: blue;
   }
 
-  p1, p2{ width:250px;
-      font-size:22px;
+  p1, p2, p3{ width:250px;
+      font-size:24px;
       background: linear-gradient(to right, rgba(242,246,248,1) 0%, rgba(216,225,231,0.87) 19%, rgba(181,198,208,0.36) 94%, rgba(181,198,208,0.32) 100%);
   }
 
+  #score{background-color: blue;}
+
   #caja{
+    font-family: 'ZCOOL XiaoWei', serif;
+      padding-top:30px;
+      width:580px;
       background: linear-gradient(to bottom, rgba(76,76,76,1) 0%, rgba(79,68,102,0.9) 32%, rgba(71,71,71,0.79) 66%, rgba(19,19,19,0.68) 100%);
   }
 
-  p{background: linear-gradient(to right, rgba(242,246,248,1) 0%, rgba(216,225,231,0.87) 19%, rgba(181,198,208,0.36) 94%, rgba(181,198,208,0.32) 100%);}
+  p{
+    padding:4px;   
+    background: linear-gradient(to right, rgba(242,246,248,1) 0%, rgba(216,225,231,0.87) 19%, rgba(181,198,208,0.36) 94%, rgba(181,198,208,0.32) 100%);}
 
   
+p5{
+    height:"350";
+    width:"350";
+}
