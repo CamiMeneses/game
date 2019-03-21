@@ -59,7 +59,8 @@ class Frame{
         $my_line.nuevoFrame();
       } else{
         $("p4").html("Continua jugando...");
-        $("p5").html("<img src=https://media.giphy.com/media/9B4zcSBmXDr6E/giphy.gif>");
+        if(self.firstShoot>0){
+        $("p5").html("<img src=https://media.giphy.com/media/9B4zcSBmXDr6E/giphy.gif>");}
         self.restart(self)}
     }
     else if (self.firstShoot.length==1){
@@ -75,7 +76,7 @@ class Frame{
         if (suma===10 ){
           $("p4").html("SPARE");
           $("#message").css({backgroundColor:'yellow'}); 
-          $("p5").html("<img src=https://static.wixstatic.com/media/db56f4_55a32cc5d9564085a6a76f595616ae94.gif>");
+          $("p5").html("<img src=https://media2.giphy.com/media/FdxZ2cfg5W6UdXxUQa/200.webp?cid=3640f6095c93da84784c345867b4c3cb>");
         }  else{
           $("p4").html("Será la próxima");
           $("#message").css({backgroundColor:'aqua'});  
